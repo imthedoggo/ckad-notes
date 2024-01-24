@@ -1,4 +1,33 @@
 
+## get
+
+switch to dev namespace to work on it instead of default
+`kubectl config set-context $(kubectl config current-context) --namespace=dev`
+
+
+
+all objects, all namespaces
+`k get all -A`
+
+
+## create
+
+
+## scale
+
+
+## 
+
+## export
+
+
+
+
+### objects created imperatively
+* pod
+
+
+* ns
 
 
 
