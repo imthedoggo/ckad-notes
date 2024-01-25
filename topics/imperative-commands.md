@@ -1,26 +1,73 @@
 
+## print
+
+print content of webapp container
+`kubectl exec webapp -- cat /log/app.log`
+
+
 ## get
 
 switch to dev namespace to work on it instead of default
 `kubectl config set-context $(kubectl config current-context) --namespace=dev`
+
+--dry-run: By default, as soon as the command is run, the resource will be created. If you simply want to test your command, use the --dry-run=client option. This will not create the resource. Instead, tell you whether the resource can be created and if your command is right.
+
+-o yaml: This will output the resource definition in YAML format on the screen
 
 
 
 all objects, all namespaces
 `k get all -A`
 
+## visibility
+check rollout status
+`kubectl rollout status deployment/nginx-deployment`
 
 ## create
 
+Create an NGINX Pod
+kubectl run nginx --image=nginx
+
+Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
+`kubectl run nginx --image=nginx --dry-run=client -o yaml`
+
+Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
+`kubectl run nginx --image=nginx --dry-run=client -o yaml`
+
+save the YAML definition to a file and modify
+kubectl run nginx --image=nginx --dry-run=client -o yaml > nginx-pod.yaml
+
+## deploy with replicas
+
+`kubectl create deployment nginx --image=nginx --replicas=4`
+
+Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas
+`kubectl create deployment redis-deploy --image=redis --replicas=2 -n dev-ns`
+
+update deployment
+`kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1`
 
 ## scale
+
+kubectl scale deployment nginx --replicas=4
 
 
 ## 
 
-## export
+## expose
 
+Create a new pod called custom-nginx using the nginx image and expose it on container port 8080
+`k run custom-nginx --image=nginx --port=8080`
 
+Create a pod:httpd using the image httpd:alpine in the default namespace.
+Next, create a service of type ClusterIP by the same name (httpd). The target port for the service should be 80.
+`k run  httpd --port=80 --image=httpd:alpine --expose`
+
+create a Service named redis-service of type ClusterIP to expose pod redis on port 6379
+`k expose pod redis --port=6379 --name redis-service --dry-run=client -o yaml`
+(This will automatically use the pod's labels as selectors)
+Or
+`k create service clusterip redis --tcp=6379:6379 --dry-run=client -o yaml (This will not use the pods' labels as selectors; instead it will assume selectors as app=redis`
 
 
 ### objects created imperatively

@@ -28,8 +28,38 @@ spec: (unique for each created object, dictionary)
 
 ## Replica Set
 can also manage pods that weren't created as a part of the replica set
+The .spec.selector field is a label selector. These are the labels used to identify potential Pods to acquire. In our frontend.yaml example, the selector was:
+```angular2html
+matchLabels:
+  tier: frontend
+```
+In the ReplicaSet, .spec.template.metadata.labels must match spec.selector, or it will be rejected by the API.
 
 ### YAML
+```angular2html
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+	name:
+	labels:
+spec:
+	template:
+		metadata: 
+			app: myapp
+			type: front-end
+		spec: (unique for each created object, dictionary)
+			containers: 
+				- name: nginx-container
+				image: nginx
+	replicas: 3
+	selector: (not required, assumed as lables provided)
+		matchLabels:
+			type: front-end
+
+```
+
+Use PVC on rs definition
 ```angular2html
 
 apiVersion: apps/v1
