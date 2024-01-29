@@ -14,3 +14,32 @@ containers: (list/array)
 - name: nginx-container (a dash means first item in the list)
 image: nginx
 ```
+
+## Tricks
+
+Use List object to create similar objects in the same file
+```angular2html
+apiVersion: v1
+kind: List
+items:
+  - kind: PersistentVolume
+    apiVersion: v1
+    metadata:
+      name: redis01
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      capacity:
+        storage: 1Gi
+      hostPath:
+        path: /redis01
+  - kind: PersistentVolume
+    apiVersion: v1
+    metadata:
+      name: redis02
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      capacity:
+        storage: 1Gi
+      hostPath:
+        path: /redis02
+```

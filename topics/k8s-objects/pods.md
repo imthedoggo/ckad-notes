@@ -73,11 +73,31 @@ spec:
 					- /app/is_healthy	
 ```
 
+Container level attributes:
+* env variables
+* commands
+* 
+```angular2html
+apiVersion: v1
+kind: Pod
+metadata:
+  name: print-greeting
+spec:
+  containers:
+  - name: env-print-demo
+    image: bash
+    env:
+    - name: GREETING
+      value: "Warm greetings to"
+    command: ["echo"]
+    args: ["$(MESSAGE)"]
+```
+
 
 ### Imperative
 
-get available pods
-`kubectl get pods`
+get available labeled pods
+`kubectl get pods -l type=doggo`
 
 see info on pod
 `kubectl describe pod pod-name`

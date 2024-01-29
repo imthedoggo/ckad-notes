@@ -41,6 +41,9 @@ by default set to Retain (remain until manually deleted). Alternatively, it can 
 * Delete
 * Recycle
 
+EmptyDir{}
+stored on the node memory
+
 ### YAML
 Volume on a pod-container
 ```angular2html

@@ -26,7 +26,7 @@ check rollout status
 ## create
 
 Create an NGINX Pod
-kubectl run nginx --image=nginx
+`kubectl run nginx --image=nginx`
 
 Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
 `kubectl run nginx --image=nginx --dry-run=client -o yaml`
@@ -69,6 +69,44 @@ create a Service named redis-service of type ClusterIP to expose pod redis on po
 Or
 `k create service clusterip redis --tcp=6379:6379 --dry-run=client -o yaml (This will not use the pods' labels as selectors; instead it will assume selectors as app=redis`
 
+expose an existing deployment as nodeport service (nodeport itself is added on the yaml)
+`k expose deploy deploy-name --name service-name --type NodePort --port 80`
+
+### misc
+JsonPath is a query language for JSON that allows you to extract specific data from a JSON structure.
+The `-o=jsonpath` flag in kubectl is used to format the output of a command using a JsonPath expression.
+The expression is used to traverse the JSON structure and extract the desired data.
+
+extract the names of all pods in a specific namespace
+`kubectl get pods -n your-namespace -o=jsonpath='{.items[*].metadata.name}'`
+
+extract all namespaces into a file
+`k get ns -o=jsonpath='{.items[*].metadata.name}' > /desired/folder/filename.txt`
+
+
+inspect logs 
+`kubectl -n elastic-stack logs kibana`
+
+
+
+execute into the container and inspect stored logs
+`kubectl -n elastic-stack exec -it app -- cat /log/app.log`
+
+get all resources in all namespaces
+`kubectl get all -A`
+
+
+move file
+`mv target-file-in-origin-directory target-directory`
+
+print OS content
+`cat /etc/*release*`
+
+enter a specific pod / container and open a pod/container terminal
+`kubectl exec -it podname -c containername bash`
+
+print file inside the pod
+`kubectl exec -it podname -- cat filepath/name`
 
 ### objects created imperatively
 * pod
